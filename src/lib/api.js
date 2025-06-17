@@ -1,5 +1,5 @@
 // خدمة API للتواصل مع النظام الخلفي
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://property-management-backend-2.onrender.com/api';
 
 class ApiService {
   constructor() {
