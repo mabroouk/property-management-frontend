@@ -24,18 +24,125 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
+// صفحة العقارات
+const PropertiesPage = () => (
+  <Layout currentPage="properties">
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">إدارة العقارات</h1>
+      <p>هذه صفحة إدارة العقارات - قيد التطوير</p>
+    </div>
+  </Layout>
+);
+
+// صفحة المشاريع
+const ProjectsPage = () => (
+  <Layout currentPage="projects">
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">إدارة المشاريع</h1>
+      <p>هذه صفحة إدارة المشاريع - قيد التطوير</p>
+    </div>
+  </Layout>
+);
+
+// صفحة المباني
+const BuildingsPage = () => (
+  <Layout currentPage="buildings">
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">إدارة المباني</h1>
+      <p>هذه صفحة إدارة المباني - قيد التطوير</p>
+    </div>
+  </Layout>
+);
+
+// صفحة الوحدات
+const UnitsPage = () => (
+  <Layout currentPage="units">
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">إدارة الوحدات</h1>
+      <p>هذه صفحة إدارة الوحدات - قيد التطوير</p>
+    </div>
+  </Layout>
+);
+
+// صفحة العقود
+const ContractsPage = () => (
+  <Layout currentPage="contracts">
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">إدارة العقود</h1>
+      <p>هذه صفحة إدارة العقود - قيد التطوير</p>
+    </div>
+  </Layout>
+);
+
 // مكون التطبيق الرئيسي
 const AppContent = () => {
-  const { isAuthenticated } = useAuth();
-
-  if (!isAuthenticated) {
-    return <LoginPage />;
-  }
-
   return (
-    <Layout currentPage="dashboard">
-      <Dashboard />
-    </Layout>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route 
+          path="/" 
+          element={
+            <ProtectedRoute>
+              <Layout currentPage="dashboard">
+                <Dashboard />
+              </Layout>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute>
+              <Layout currentPage="dashboard">
+                <Dashboard />
+              </Layout>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/properties" 
+          element={
+            <ProtectedRoute>
+              <PropertiesPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/projects" 
+          element={
+            <ProtectedRoute>
+              <ProjectsPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/buildings" 
+          element={
+            <ProtectedRoute>
+              <BuildingsPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/units" 
+          element={
+            <ProtectedRoute>
+              <UnitsPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/contracts" 
+          element={
+            <ProtectedRoute>
+              <ContractsPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
   );
 };
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -33,63 +34,65 @@ import {
 const Layout = ({ children, currentPage = 'dashboard' }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, company, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const navigation = [
     {
       name: 'لوحة التحكم',
-      href: '#dashboard',
+      href: '/dashboard',
       icon: Home,
       id: 'dashboard'
     },
     {
       name: 'العقارات',
-      href: '#properties',
+      href: '/properties',
       icon: Building2,
       id: 'properties',
       children: [
-        { name: 'المشاريع', href: '#projects', id: 'projects' },
-        { name: 'المباني', href: '#buildings', id: 'buildings' },
-        { name: 'الوحدات', href: '#units', id: 'units' },
+        { name: 'المشاريع', href: '/projects', id: 'projects' },
+        { name: 'المباني', href: '/buildings', id: 'buildings' },
+        { name: 'الوحدات', href: '/units', id: 'units' },
       ]
     },
     {
       name: 'العقود',
-      href: '#contracts',
+      href: '/contracts',
       icon: FileText,
       id: 'contracts',
       children: [
-        { name: 'قائمة العقود', href: '#contracts-list', id: 'contracts-list' },
-        { name: 'الأشخاص', href: '#persons', id: 'persons' },
-        { name: 'الدفعات', href: '#payments', id: 'payments' },
-        { name: 'الشيكات', href: '#cheques', id: 'cheques' },
+        { name: 'قائمة العقود', href: '/contracts-list', id: 'contracts-list' },
+        { name: 'الأشخاص', href: '/persons', id: 'persons' },
+        { name: 'الدفعات', href: '/payments', id: 'payments' },
+        { name: 'الشيكات', href: '/cheques', id: 'cheques' },
       ]
     },
     {
       name: 'المحاسبة',
-      href: '#finance',
+      href: '/finance',
       icon: Calculator,
       id: 'finance',
       children: [
-        { name: 'المصروفات', href: '#expenses', id: 'expenses' },
-        { name: 'التقارير المالية', href: '#financial-reports', id: 'financial-reports' },
-        { name: 'قائمة الدخل', href: '#income-statement', id: 'income-statement' },
+        { name: 'المصروفات', href: '/expenses', id: 'expenses' },
+        { name: 'التقارير المالية', href: '/financial-reports', id: 'financial-reports' },
+        { name: 'قائمة الدخل', href: '/income-statement', id: 'income-statement' },
       ]
     },
     {
       name: 'الصيانة',
-      href: '#maintenance',
+      href: '/maintenance',
       icon: Wrench,
       id: 'maintenance'
     },
     {
       name: 'التقارير',
-      href: '#reports',
+      href: '/reports',
       icon: FileBarChart,
       id: 'reports'
     },
     {
       name: 'الإعدادات',
-      href: '#settings',
+      href: '/settings',
       icon: Settings,
       id: 'settings'
     }
@@ -123,7 +126,10 @@ const Layout = ({ children, currentPage = 'dashboard' }) => {
             <Button
               variant={currentPage === item.id ? 'default' : 'ghost'}
               className="w-full justify-start gap-3 h-12"
-              onClick={() => setSidebarOpen(false)}
+              onClick={() => {
+                navigate(item.href);
+                setSidebarOpen(false);
+              }}
             >
               <item.icon className="w-5 h-5" />
               {item.name}
@@ -137,7 +143,10 @@ const Layout = ({ children, currentPage = 'dashboard' }) => {
                     variant={currentPage === child.id ? 'secondary' : 'ghost'}
                     size="sm"
                     className="w-full justify-start"
-                    onClick={() => setSidebarOpen(false)}
+                    onClick={() => {
+                      navigate(child.href);
+                      setSidebarOpen(false);
+                    }}
                   >
                     {child.name}
                   </Button>

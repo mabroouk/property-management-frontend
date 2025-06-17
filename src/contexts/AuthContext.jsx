@@ -33,7 +33,9 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Auth check failed:', error);
-      logout();
+      // إزالة التوكن المنتهي الصلاحية
+      localStorage.removeItem('token');
+      apiService.removeToken();
     } finally {
       setLoading(false);
     }
